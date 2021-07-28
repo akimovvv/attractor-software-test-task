@@ -1,8 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.permissions import IsAuthenticated
+
 from .forms import *
 from .models import *
+from .serializer import Category_Serializer, Article_Serializer
 
 
 def index(request):
@@ -170,3 +174,59 @@ def delete_article(request, article_id):
     article = Article.objects.get(pk=article_id)
     article.delete()
     return redirect('/')
+
+
+class List_Category_Api_View(ListAPIView):
+    """This API View for get all category"""
+    permission_classes = [IsAuthenticated]
+    queryset = Category.objects.all()
+    serializer_class = Category_Serializer
+
+
+class Create_Category_Api_View(CreateAPIView):
+    """This API View for create new category"""
+    permission_classes = [IsAuthenticated]
+    queryset = Category.objects.all()
+    serializer_class = Category_Serializer
+
+
+class Update_Category_Api_View(UpdateAPIView):
+    """This API View for update category data by id"""
+    permission_classes = [IsAuthenticated]
+    queryset = Category.objects.all()
+    serializer_class = Category_Serializer
+
+
+class Delete_Category_Api_View(DestroyAPIView):
+    """This API View for delete category by id"""
+    permission_classes = [IsAuthenticated]
+    queryset = Category.objects.all()
+    serializer_class = Category_Serializer
+
+
+class List_Article_Api_View(ListAPIView):
+    """This API View for get all article"""
+    permission_classes = [IsAuthenticated]
+    queryset = Article.objects.all()
+    serializer_class = Article_Serializer
+
+
+class Create_Article_Api_View(CreateAPIView):
+    """This API View for create new article"""
+    permission_classes = [IsAuthenticated]
+    queryset = Article.objects.all()
+    serializer_class = Article_Serializer
+
+
+class Update_Article_Api_View(UpdateAPIView):
+    """This API View for update article data by id"""
+    permission_classes = [IsAuthenticated]
+    queryset = Article.objects.all()
+    serializer_class = Article_Serializer
+
+
+class Delete_Article_Api_View(DestroyAPIView):
+    """This API View for delete article by id"""
+    permission_classes = [IsAuthenticated]
+    queryset = Article.objects.all()
+    serializer_class = Article_Serializer
