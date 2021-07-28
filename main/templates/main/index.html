@@ -1,0 +1,155 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>{% block title %}Main page{% endblock %}</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'main/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'main/css/index.css' %}" rel="stylesheet">
+    <style>
+        p.clip {
+            white-space: nowrap; /* Запрещаем перенос строк */
+            overflow: hidden; /* Обрезаем все, что не помещается в область */
+            padding: 5px; /* Поля вокруг текста */
+            text-overflow: ellipsis; /* Добавляем многоточие */
+        }
+
+        .section a {
+            color: white;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .title-text {
+            margin-top: 100px;
+            text-align: center;
+        }
+
+
+        body {
+            background: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+{% if user.is_authenticated %}
+    <header>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">Add some information about the album below, the author, or any other
+                            background context. Make it a few sentences long so folks can pick up some informative
+                            tidbits. Then, link them off to some social networking sites or contact information.</p>
+                    </div>
+                    {% block categories %}
+                        <div class="col-sm-4 offset-md-1 py-4">
+                            <h4 class="text-white">Categories</h4>
+                            <ul class="list-unstyled">
+                                {% for category in categories %}
+                                    <li><a href="{{ category.get_absolute_url_articles_by_category_id }}"
+                                           class="text-white">{{ category.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark box-shadow">
+            <div class="container d-flex justify-content-between">
+                <a href="{% url 'sing_out' %}" class="navbar-brand d-flex align-items-center">
+                    <strong>Sing Out</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                        aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    {% block main %}
+        <main role="main">
+
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <h1 class="jumbotron-heading">Attractor Software</h1>
+                    <p class="lead text-muted">It`s test project from Attractor School</p>
+                    <p>
+                        <a href="{% url 'index' %}" class="btn btn-primary my-2">Main Page</a>
+                        <a href="{% url 'my_profile' %}" class="btn btn-secondary my-2">My profile</a>
+                    </p>
+                </div>
+            </section>
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="row">
+                        {% for article in articles %}
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" src="{{ article.image.url }}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <p class="clip">{{ article.description }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">View
+                                                </button>
+                                                {#                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>#}
+                                            </div>
+                                            <small class="text-muted">{{ article.updated_at }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    {% endblock %}
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+            <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+            <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting
+                started guide</a>.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'main/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'main/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{% else %}
+    <div class="section clearfix">
+        <div class="title-text">
+            <h2>Please Log In</h2>
+            <h1>Access is denied to unauthorized users</h1>
+            <a href="{% url 'sing_in' %}">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Log In</button>
+            </a>
+        </div>
+    </div>
+{% endif %}
+</body>
+
+</html>

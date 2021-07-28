@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 # Create your models here.
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -12,6 +12,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url_articles_by_category_id(self):
+        return reverse('get_articles_by_category_id', kwargs={'category_id': self.id})
 
 
 class Article(models.Model):
@@ -25,3 +28,9 @@ class Article(models.Model):
 
     def __str__(self):
         return f'{self.title}: Created at - {self.created_at}, Updated at - {self.updated_at}'
+
+    def get_absolute_url_articles_edit(self):
+        return reverse('edit_article', kwargs={'article_id': self.id})
+
+    def get_absolute_url_articles_delete(self):
+        return reverse('delete_article', kwargs={'article_id': self.id})

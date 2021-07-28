@@ -1,0 +1,15 @@
+{% extends 'main/sing-in.html' %}
+{% block title %}Edit User Data{% endblock %}
+{% block main %}
+    <main class="form-signup" style="margin: auto">
+        <a href="/">
+            <button class="w-100 btn btn-lg btn-primary">main page</button>
+        </a>
+        <form method="post">
+            <h1 class="h3 mb-3 fw-normal">Editing user</h1>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Edit</button>
+        </form>
+    </main>
+{% endblock %}

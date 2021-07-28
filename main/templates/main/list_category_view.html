@@ -1,0 +1,48 @@
+{% extends 'main/index.html' %}
+{% block title %}Category View{% endblock %}
+{% block categories %}
+    <div class="col-sm-4 offset-md-1 py-4">
+        <h4 class="text-white">Categories</h4>
+        <ul class="list-unstyled">
+            {% for category in categories %}
+                <li>
+                    <a href={{ category.get_absolute_url_articles_by_category_id }} class="text-white">{{ category.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>{% endblock %}
+{% block main %}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Attractor Software</h1>
+            <p class="lead text-muted">It`s test project from Attractor School</p>
+            <p>
+                <a href="{% url 'index' %}" class="btn btn-primary my-2">Main Page</a>
+                <a href="{% url 'my_profile' %}" class="btn btn-secondary my-2">My profile</a>
+            </p>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                {% for article in articles %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top" src="{{ article.image.url }}" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="clip">{{ article.description }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    </div>
+                                    <small class="text-muted">{{ article.updated_at }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>{% endblock %}

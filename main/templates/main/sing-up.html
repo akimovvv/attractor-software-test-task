@@ -1,0 +1,14 @@
+{% extends 'main/sing-in.html' %}
+{% block title %}Log Up{% endblock %}
+{% block main %}
+    <main class="form-signup" style="margin: auto">
+        <form method="post">
+            <h1 class="h3 mb-3 fw-normal">Please log up</h1>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Log Up</button>
+            <a href='{% url 'sing_in' %}'><p class="mt-5 mb-3 text-muted">If you already registered click!</p></a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        </form>
+    </main>
+{% endblock %}
